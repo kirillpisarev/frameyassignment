@@ -11,6 +11,6 @@ export const signUp = actionCreator.async<{ username: string; password: string }
   'SIGN_UP',
 );
 
-export const signOut = actionCreator.async<null, null, unknown>('SIGN_OUT');
+export const signOut = actionCreator.async<void, void, unknown>('SIGN_OUT');
 
 export const rehydrate = actionCreator<{ token: string } | null>('REHYDRATE');

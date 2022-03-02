@@ -27,10 +27,10 @@ function* signUpSaga({ payload }: ReturnType<typeof signUp.started>) {
 
 function* signOutSaga() {
   try {
-    yield put(signOut.done({ result: null, params: null }));
+    yield put(signOut.done({}));
   } catch (error) {
     Alert.alert('Error', String(error));
-    yield put(signOut.failed({ error, params: null }));
+    yield put(signOut.failed({ error }));
   }
 }
 

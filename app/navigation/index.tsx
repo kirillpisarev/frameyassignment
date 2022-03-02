@@ -1,7 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect } from 'react';
+import { Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { appLoaded } from '~/redux/app/actions';
+import { signOut } from '~/redux/user/actions';
 import { isAuthenticatedSelector, isRehydratedSelector } from '~/redux/user/selectors';
 import { BookScreen } from '~/screens/Book';
 import { DiscoverScreen } from '~/screens/Discover';
@@ -33,7 +35,12 @@ export const RootStack = () => {
           <Stack.Screen
             component={DiscoverScreen}
             name="DISCOVER"
-            options={{ title: 'Discover' }}
+            options={{
+              title: 'Discover',
+              headerRight: () => (
+                <Button onPress={() => dispatch(signOut.started())} title="Sign Out" />
+              ),
+            }}
           />
           <Stack.Screen
             component={BookScreen}

@@ -9,12 +9,13 @@ export type BooksState = {
   };
   search: {
     list: Book[];
+    query: string;
   };
 };
 
 const initialState: BooksState = {
   random: { list: [] },
-  search: { list: [] },
+  search: { list: [], query: '' },
 };
 
 export const booksReducer = reducerWithInitialState(initialState)
