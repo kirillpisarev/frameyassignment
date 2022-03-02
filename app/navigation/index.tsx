@@ -35,8 +35,12 @@ export const RootStack = () => {
         </>
       ) : (
         <>
-          <Stack.Screen component={SignInScreen} name="SIGN_IN" options={{ headerShown: false }} />
-          <Stack.Screen component={SignUpScreen} name="SIGN_UP" options={{ headerShown: false }} />
+          <Stack.Screen
+            component={SignInScreen}
+            name="SIGN_IN"
+            options={{ headerShown: false, title: 'Sign In' }}
+          />
+          <Stack.Screen component={SignUpScreen} name="SIGN_UP" options={{ title: 'Sign Up' }} />
         </>
       )}
     </Stack.Navigator>
