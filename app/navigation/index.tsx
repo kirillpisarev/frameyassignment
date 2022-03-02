@@ -35,7 +35,11 @@ export const RootStack = () => {
             name="DISCOVER"
             options={{ title: 'Discover' }}
           />
-          <Stack.Screen component={BookScreen} name="BOOK" options={{ title: 'Book' }} />
+          <Stack.Screen
+            component={BookScreen}
+            name="BOOK"
+            options={({ route }) => ({ title: route.params.book.title.toString() })}
+          />
         </>
       ) : (
         <>
