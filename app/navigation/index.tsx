@@ -30,8 +30,12 @@ export const RootStack = () => {
     <Stack.Navigator>
       {isAuthenticated ? (
         <>
-          <Stack.Screen component={DiscoverScreen} name="DISCOVER" />
-          <Stack.Screen component={BookScreen} name="BOOK" />
+          <Stack.Screen
+            component={DiscoverScreen}
+            name="DISCOVER"
+            options={{ title: 'Discover' }}
+          />
+          <Stack.Screen component={BookScreen} name="BOOK" options={{ title: 'Book' }} />
         </>
       ) : (
         <>
