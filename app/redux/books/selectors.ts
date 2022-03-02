@@ -1,5 +1,4 @@
 import { AppState } from '~/redux/root-reducer';
 
-export const randomBooksSelector = (state: AppState) => state.books.random.list;
-export const searchBooksSelector = (state: AppState) => state.books.search.list;
-export const searchQuerySelector = (state: AppState) => state.books.search.query;
+export const randomBooksSelector = (state: AppState) => state.books.random;
+export const searchBooksSelector = (state: AppState) => state.books.search;

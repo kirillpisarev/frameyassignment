@@ -27,6 +27,11 @@ function* searchBooksSaga({ payload }: ReturnType<typeof searchBooks.started>) {
       throw new Error('Token is empty');
     }
 
+    if (payload.query === '') {
+      yield put(searchBooks.done({ result: { list: [] }, params: payload }));
+      return;
+    }
+
     const response: { books: Book[] } = yield call(
       FrameyApi.Books.getList,
       { query: payload.query },

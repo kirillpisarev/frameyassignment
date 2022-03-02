@@ -4,21 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Book } from '~/api/types';
 import { RootStackParamList } from '~/navigation/types';
 import { getRandomBooks, searchBooks } from '~/redux/books/actions';
-import {
-  randomBooksSelector,
-  searchBooksSelector,
-  searchQuerySelector,
-} from '~/redux/books/selectors';
+import { randomBooksSelector, searchBooksSelector } from '~/redux/books/selectors';
 import { BooksList } from '~/screens/Discover/components/BooksList';
+import { Loading } from '~/screens/Discover/components/Loading';
 import { SearchInput } from '~/screens/Discover/components/SearchInput';
 
 export const DiscoverScreen = ({
   navigation,
 }: StackScreenProps<RootStackParamList, 'DISCOVER'>) => {
   const dispatch = useDispatch();
-  const randomBooksList = useSelector(randomBooksSelector);
-  const searchBooksList = useSelector(searchBooksSelector);
-  const searchQuery = useSelector(searchQuerySelector);
+  const { list: randomBooksList, loading: randomBooksLoading } = useSelector(randomBooksSelector);
+  const {
+    list: searchBooksList,
+    query: searchQuery,
+    loading: searchBooksLoading,
+  } = useSelector(searchBooksSelector);
   const books = searchQuery ? searchBooksList : randomBooksList;
 
   useEffect(() => {
@@ -42,7 +42,11 @@ export const DiscoverScreen = ({
   return (
     <>
       <SearchInput onSearchSubmit={onSearchSubmit} />
-      <BooksList books={books} onBookPress={onBookPress} />
+      {randomBooksLoading || searchBooksLoading ? (
+        <Loading />
+      ) : (
+        <BooksList books={books} onBookPress={onBookPress} />
+      )}
     </>
   );
 };
