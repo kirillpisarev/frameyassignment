@@ -1,26 +1,31 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { rehydrate } from '~/redux/user/actions';
+import { User } from '~/api/types';
+import { rehydrate, signIn, signOut, signUp } from '~/redux/user/actions';
 
 export type UserState = {
   rehydrated: boolean;
-} & (
-  | {
-      token: string;
-      username: string;
-    }
-  | {
-      token: null;
-      username: null;
-    }
-);
+  data: User | null;
+};
 
 const initialState: UserState = {
   rehydrated: false,
-  token: null,
-  username: null,
+  data: null,
 };
 
-export const userReducer = reducerWithInitialState(initialState).case(rehydrate, (state) => ({
-  ...state,
-  rehydrated: true,
-}));
+export const userReducer = reducerWithInitialState(initialState)
+  .case(rehydrate, (state) => ({
+    ...state,
+    rehydrated: true,
+  }))
+  .case(signUp.done, (state, { result }) => ({
+    ...state,
+    data: result,
+  }))
+  .case(signIn.done, (state, { result }) => ({
+    ...state,
+    data: result,
+  }))
+  .case(signOut.done, (state) => ({
+    ...state,
+    data: null,
+  }));

@@ -1,14 +1,36 @@
 import { Alert } from 'react-native';
-import { put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { FrameyApi } from '~/api';
+import { User } from '~/api/types';
 import { appLoaded } from '~/redux/app/actions';
-import { authenticate, rehydrate } from '~/redux/user/actions';
+import { signIn, rehydrate, signUp, signOut } from '~/redux/user/actions';
 
-function* authenticateSaga({ payload }: ReturnType<typeof authenticate.started>) {
+function* signInSaga({ payload }: ReturnType<typeof signIn.started>) {
   try {
-    yield put(authenticate.done({ result: { token: '' }, params: payload }));
+    const response: { user: User } = yield call(FrameyApi.Auth.login, payload);
+    yield put(signIn.done({ result: response.user, params: payload }));
   } catch (error) {
     Alert.alert('Error', String(error));
-    yield put(authenticate.failed({ error, params: payload }));
+    yield put(signIn.failed({ error, params: payload }));
+  }
+}
+
+function* signUpSaga({ payload }: ReturnType<typeof signUp.started>) {
+  try {
+    const response: { user: User } = yield call(FrameyApi.Auth.register, payload);
+    yield put(signUp.done({ result: response.user, params: payload }));
+  } catch (error) {
+    Alert.alert('Error', String(error));
+    yield put(signUp.failed({ error, params: payload }));
+  }
+}
+
+function* signOutSaga() {
+  try {
+    yield put(signOut.done({ result: null, params: null }));
+  } catch (error) {
+    Alert.alert('Error', String(error));
+    yield put(signOut.failed({ error, params: null }));
   }
 }
 
@@ -23,6 +45,8 @@ function* rehydrateSaga() {
 }
 
 export function* userSaga() {
-  yield takeEvery(authenticate.started, authenticateSaga);
+  yield takeEvery(signIn.started, signInSaga);
+  yield takeEvery(signUp.started, signUpSaga);
+  yield takeEvery(signOut.started, signOutSaga);
   yield takeEvery(appLoaded, rehydrateSaga);
 }

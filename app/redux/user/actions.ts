@@ -1,11 +1,16 @@
 import actionCreatorFactory from 'typescript-fsa';
+import { User } from '~/api/types';
 
 const actionCreator = actionCreatorFactory('@@user');
 
-export const authenticate = actionCreator.async<
-  { user: string; password: string },
-  { token: string },
-  unknown
->('AUTHENTICATE');
+export const signIn = actionCreator.async<{ username: string; password: string }, User, unknown>(
+  'SIGN_IN',
+);
+
+export const signUp = actionCreator.async<{ username: string; password: string }, User, unknown>(
+  'SIGN_UP',
+);
+
+export const signOut = actionCreator.async<null, null, unknown>('SIGN_OUT');
 
 export const rehydrate = actionCreator<{ token: string } | null>('REHYDRATE');
