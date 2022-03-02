@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export const Loading = () => (
   <View style={styles.wrapper}>
-    <ActivityIndicator size={'large'} />
+    <ActivityIndicator />
   </View>
 );
 

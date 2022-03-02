@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useEffect } from 'react';
-import { Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { HeaderButton } from '~/navigation/components/HeaderButton';
 import { appLoaded } from '~/redux/app/actions';
 import { signOut } from '~/redux/user/actions';
 import { isAuthenticatedSelector, isRehydratedSelector } from '~/redux/user/selectors';
@@ -38,7 +38,7 @@ export const RootStack = () => {
             options={{
               title: 'Discover',
               headerRight: () => (
-                <Button onPress={() => dispatch(signOut.started())} title="Sign Out" />
+                <HeaderButton title={'Sign Out'} onPress={() => dispatch(signOut.started())} />
               ),
             }}
           />
