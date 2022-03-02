@@ -1,14 +1,26 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { authenticate } from '~/redux/user/actions';
+import { rehydrate } from '~/redux/user/actions';
 
 export type UserState = {
-  isAuthenticated: boolean | null;
-};
+  rehydrated: boolean;
+} & (
+  | {
+      token: string;
+      username: string;
+    }
+  | {
+      token: null;
+      username: null;
+    }
+);
 
 const initialState: UserState = {
-  isAuthenticated: null,
+  rehydrated: false,
+  token: null,
+  username: null,
 };
 
-export const userReducer = reducerWithInitialState(initialState).case(authenticate.done, () => ({
-  isAuthenticated: true,
+export const userReducer = reducerWithInitialState(initialState).case(rehydrate, (state) => ({
+  ...state,
+  rehydrated: true,
 }));

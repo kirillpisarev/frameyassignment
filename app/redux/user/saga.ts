@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import { put, takeEvery } from 'redux-saga/effects';
-import { authenticate } from '~/redux/user/actions';
+import { appLoaded } from '~/redux/app/actions';
+import { authenticate, rehydrate } from '~/redux/user/actions';
 
 function* authenticateSaga({ payload }: ReturnType<typeof authenticate.started>) {
   try {
@@ -11,6 +12,17 @@ function* authenticateSaga({ payload }: ReturnType<typeof authenticate.started>)
   }
 }
 
+function* rehydrateSaga() {
+  try {
+    // TODO:: read token here
+    const token = '';
+    yield put(rehydrate(token ? { token } : null));
+  } catch (error) {
+    Alert.alert('Error', String(error));
+  }
+}
+
 export function* userSaga() {
   yield takeEvery(authenticate.started, authenticateSaga);
+  yield takeEvery(appLoaded, rehydrateSaga);
 }
