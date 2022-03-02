@@ -1,16 +1,21 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { RootStack } from '~/navigation';
+import { ReduxProvider } from '~/redux/redux-provider';
 
-const App = () => {
+export const App = () => {
   return (
-    <SafeAreaView>
-      <NavigationContainer>
-        <RootStack />
-      </NavigationContainer>
+    <SafeAreaView style={styles.wrapper}>
+      <ReduxProvider>
+        <NavigationContainer>
+          <RootStack />
+        </NavigationContainer>
+      </ReduxProvider>
     </SafeAreaView>
   );
 };
 
-export default App;
+const styles = StyleSheet.create({
+  wrapper: { flex: 1 },
+});
