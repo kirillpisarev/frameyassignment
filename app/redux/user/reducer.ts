@@ -13,8 +13,8 @@ const initialState: UserState = {
 };
 
 export const userReducer = reducerWithInitialState(initialState)
-  .case(rehydrate, (state) => ({
-    ...state,
+  .case(rehydrate, (state, result) => ({
+    data: result.user,
     rehydrated: true,
   }))
   .case(signUp.done, (state, { result }) => ({
